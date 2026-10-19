@@ -1,0 +1,1 @@
+{"checks":8,"passed":7,"failed":"Initial last-byte expectation exposed unmodified upstream IndexError; corrected the test to require an explicit partial observation, not to claim recovery. No upstream fix was made.","subsequent_checks":8,"subsequent_passed":8,"no_independent_external_review":true}

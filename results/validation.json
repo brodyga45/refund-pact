@@ -1,0 +1,47 @@
+{
+  "generated_examples_only": true,
+  "CLI": [
+    {
+      "file": "intact",
+      "exit": 0,
+      "hits": [
+        100,
+        9000
+      ],
+      "observation_status": "observed_mapped_ranges",
+      "CLI_wall_seconds": 0.924062
+    },
+    {
+      "file": "truncated",
+      "exit": 2,
+      "hits": [
+        100
+      ],
+      "observation_status": "partial",
+      "CLI_wall_seconds": 1.01714
+    }
+  ],
+  "paired_benchmark": {
+    "input_bytes": 16777216,
+    "pairs": [
+      {
+        "baseline_seconds": 0.021473417058587074,
+        "audit_seconds": 0.008988542016595602
+      },
+      {
+        "baseline_seconds": 0.009817624930292368,
+        "audit_seconds": 0.014539250172674656
+      },
+      {
+        "baseline_seconds": 0.009328250074759126,
+        "audit_seconds": 0.01380762504413724
+      }
+    ],
+    "baseline_median_seconds": 0.009817624930292368,
+    "audit_median_seconds": 0.01380762504413724,
+    "all_hits_match_known_truth": true,
+    "limits": "Tiny local paired timing; API only, excludes imports, file hashes and disk acquisition"
+  },
+  "production_or_OS_validation": false,
+  "cash_or_network_operations": 0
+}

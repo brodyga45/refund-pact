@@ -1,0 +1,1 @@
+volatility3 @ git+https://github.com/volatilityfoundation/volatility3.git@77ff0b1932d77527f850c8ced01d85805ea7bf97

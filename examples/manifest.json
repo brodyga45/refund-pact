@@ -1,0 +1,38 @@
+{
+  "generated_fixture": true,
+  "real_OS_or_incident_memory": false,
+  "files": [
+    {
+      "file": "intact.lime",
+      "bytes": 8256,
+      "sha256": "8c4b1f50800653b17b9a7d5889032f4f3324553f3949ccf3182912463c40b680"
+    },
+    {
+      "file": "truncated.lime",
+      "bytes": 8192,
+      "sha256": "404e7cb6ba923dbbd3ba0b0d8157574dc692924afbc40d8cd036fd59a12efde5"
+    }
+  ],
+  "declared_mapped_ranges": [
+    [
+      0,
+      4096
+    ],
+    [
+      8192,
+      12288
+    ]
+  ],
+  "normal_unmapped_range": [
+    4096,
+    8192
+  ],
+  "logical_marker_positions_in_intact": [
+    100,
+    9000
+  ],
+  "truncated_mutation": "Remove final64payloadbytes, leave declarations unchanged",
+  "known_marker_9000_bytes_still_present_in_truncated": true,
+  "purpose": "Show that a whole failed read can discard a marker before the truncated tail",
+  "private_data_or_credentials": false
+}

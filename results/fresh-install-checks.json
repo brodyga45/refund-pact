@@ -1,0 +1,29 @@
+{
+  "fresh_venv_install_verified": true,
+  "dependency_version": "2.28.3",
+  "installed_dependency_from_venv": true,
+  "source_commit": "77ff0b1932d77527f850c8ced01d85805ea7bf97",
+  "commands_without_development_PYTHONPATH": [
+    {
+      "fixture": "intact",
+      "returncode": 0,
+      "hits": [
+        100,
+        9000
+      ],
+      "status": "observed_mapped_ranges",
+      "wall_seconds": 0.347683
+    },
+    {
+      "fixture": "truncated",
+      "returncode": 2,
+      "hits": [
+        100
+      ],
+      "status": "partial",
+      "wall_seconds": 0.248386
+    }
+  ],
+  "external_spend": 0,
+  "not_production_validation": true
+}
