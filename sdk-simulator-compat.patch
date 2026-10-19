@@ -1,0 +1,99 @@
+diff --git a/Libs/Header/SDK/Simulator/OS/OS.hpp b/Libs/Header/SDK/Simulator/OS/OS.hpp
+index 12c610b..f872b5e 100644
+--- a/Libs/Header/SDK/Simulator/OS/OS.hpp
++++ b/Libs/Header/SDK/Simulator/OS/OS.hpp
+@@ -90,6 +90,11 @@ namespace OS {
+     private:
+     #ifdef _WIN32
+         HANDLE                mSem;
++    #elif defined(__APPLE__)
++        std::mutex            mSemMutex;
++        std::condition_variable mSemCondition;
++        const uint32_t        mMax;
++        uint32_t              mCount;
+     #else
+         sem_t                 mSem;
+         const uint32_t        mMax;
+diff --git a/Libs/Source/Simulator/Components/InstanceSensorLayer.cpp b/Libs/Source/Simulator/Components/InstanceSensorLayer.cpp
+index e51d231..c75c8f4 100644
+--- a/Libs/Source/Simulator/Components/InstanceSensorLayer.cpp
++++ b/Libs/Source/Simulator/Components/InstanceSensorLayer.cpp
+@@ -3,7 +3,7 @@
+ #include "SDK/UnaLogger/Logger.h"
+ 
+ #include "SDK/Simulator/Components/InstanceSensorLayer.hpp"
+-#include "../../simulator/ConfigurationSimulator.hpp"
++#include "ConfigurationSimulator.hpp"
+ #include "SDK/Simulator/Components/SensorManager.hpp"
+ #include "SDK/Simulator/Components/ComponentSimulator.hpp"
+ #include <SDK/Simulator/Kernel/Mock/System.hpp>
+diff --git a/Libs/Source/Simulator/Components/SensorDataSample.cpp b/Libs/Source/Simulator/Components/SensorDataSample.cpp
+index 10dd58c..cdfc556 100644
+--- a/Libs/Source/Simulator/Components/SensorDataSample.cpp
++++ b/Libs/Source/Simulator/Components/SensorDataSample.cpp
+@@ -12,6 +12,7 @@
+  */
+ 
+ #include "SDK/Simulator/Components/SensorDataSample.hpp"
++#include <new>
+ 
+ namespace Sensor {
+ 
+diff --git a/Libs/Source/Simulator/OS/OS.cpp b/Libs/Source/Simulator/OS/OS.cpp
+index 5164acc..ce784cd 100644
+--- a/Libs/Source/Simulator/OS/OS.cpp
++++ b/Libs/Source/Simulator/OS/OS.cpp
+@@ -67,6 +67,9 @@ Semaphore::Semaphore(uint32_t max, uint32_t init)
+ {
+     mSem = CreateSemaphore(nullptr, init, max, nullptr);
+ }
++#elif defined(__APPLE__)
++    : mMax(max), mCount(init)
++{}
+ #else
+     : mSem(), mMax(max), mCount(init)
+ {
+@@ -78,6 +81,8 @@ Semaphore::~Semaphore()
+ {
+ #ifdef _WIN32
+     CloseHandle(mSem);
++#elif defined(__APPLE__)
++    // All waiters must have stopped before teardown, as on other platforms.
+ #else
+     sem_destroy(&mSem);
+ #endif
+@@ -88,6 +93,18 @@ bool Semaphore::take(uint32_t timeout)
+ #ifdef _WIN32
+     DWORD res = WaitForSingleObject(mSem, timeout);
+     return res == WAIT_OBJECT_0;
++#elif defined(__APPLE__)
++    // Darwin has no sem_timedwait and sem_init is unsupported. The predicate
++    // handles spurious wakeups; the mutex protects both the count and cap.
++    std::unique_lock<std::mutex> lock(mSemMutex);
++    if (timeout == UINT32_MAX) {
++        mSemCondition.wait(lock, [this] { return mCount != 0; });
++    } else if (!mSemCondition.wait_for(lock, std::chrono::milliseconds(timeout),
++                                     [this] { return mCount != 0; })) {
++        return false;
++    }
++    --mCount;
++    return true;
+ #else
+     int result;
+     if (timeout == (uint32_t)-1) {
+@@ -117,6 +134,15 @@ void Semaphore::give()
+ {
+ #ifdef _WIN32
+     ReleaseSemaphore(mSem, 1, nullptr);
++#elif defined(__APPLE__)
++    {
++        std::lock_guard<std::mutex> lock(mSemMutex);
++        if (mCount >= mMax) {
++            return;
++        }
++        ++mCount;
++    }
++    mSemCondition.notify_one();
+ #else
+     uint32_t old = mCount.load();
+     while (true) {

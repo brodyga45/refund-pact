@@ -1,0 +1,10 @@
+sim-build/
+firmware-build/
+Rally Slate Simulator.app/
+results/
+Output/*.map
+test-score
+__pycache__/
+
+*.app.disabled/
+*-preview.zip
