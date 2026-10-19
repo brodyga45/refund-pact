@@ -1,0 +1,6 @@
+{
+  "_source": "Synthetic demo fixture, not an actual PayPal payment",
+  "id": "SYNTHETICCAPTURE01",
+  "status": "COMPLETED",
+  "amount": {"value": "80.00", "currency_code": "USD"}
+}
