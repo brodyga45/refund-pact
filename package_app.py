@@ -61,6 +61,10 @@ def main():
             archive.writestr(binary.name, data)
             archive.write(path, "app-manifest.json")
             archive.write(ROOT / "Resources/icon_60x60.png", "icon.png")
+            for name in ["LICENSE", "THIRD-PARTY-NOTICES.md"]:
+                archive.write(ROOT / name, name)
+            for notice in sorted((ROOT / "licenses").glob("*.txt")):
+                archive.write(notice, "licenses/" + notice.name)
             if args.development:
                 archive.writestr("DEVELOPMENT-ONLY.txt", "Local development preview. No portal ID, publication, contest entry, award or payment is established.\n")
     print(json.dumps({"archive": str(args.output), "sha256": hashlib.sha256(args.output.read_bytes()).hexdigest(),
