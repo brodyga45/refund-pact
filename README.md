@@ -16,6 +16,14 @@ The first model load can take about a minute. The app does not replace an unavai
 
 The optional **PayPal sandbox** mode becomes available only when an owner-managed `PAYPAL_SANDBOX_ACCESS_TOKEN` is present in the server environment. It performs a read-only capture lookup. Credentials are not entered in the web page, returned to the browser, or committed to the repository. It is not a verified live integration until exercised against an actual sandbox capture.
 
+For an owner who already has a sandbox app, a helper avoids copying tokens into shell history or chat:
+
+```sh
+python3 owner_sandbox.py
+```
+
+The owner enters the existing **sandbox** Client ID and Secret in hidden terminal prompts. The helper sends them only to PayPal's sandbox OAuth endpoint, refuses redirects, retains the access token in this process environment, and starts the same local desk. It does not save credentials to a file. Close the process to end the session. In the desk, select PayPal sandbox and enter a capture ID belonging to that sandbox app. Account creation, new credentials, required agreements and identity checks remain owner actions. The helper's authentication path is unit-tested with synthetic responses; actual authentication remains unverified until the owner runs it with authorized sandbox credentials.
+
 ## Run
 
 Python 3.10+; no Python packages needed. For fresh AI inference, install Ollama from its official source and provide the `qwen2.5:3b-instruct` model. Model use and availability are subject to its own license. This prototype does not bundle model weights. The development computer already had Ollama and this model.
