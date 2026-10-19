@@ -26,7 +26,7 @@ The owner enters the existing **sandbox** Client ID and Secret in hidden termina
 
 ## Run
 
-Python 3.10+; no Python packages needed. For fresh AI inference, install Ollama from its official source and provide the `qwen2.5:3b-instruct` model. Model use and availability are subject to its own license. This prototype does not bundle model weights. The development computer already had Ollama and this model.
+Python 3.10+; no Python packages needed. The historical extraction experiments used the already installed `qwen2.5:3b-instruct` through Ollama. That exact model uses the [Qwen Research License](https://huggingface.co/Qwen/Qwen2.5-3B-Instruct/blob/main/LICENSE), which limits use to non-commercial research/evaluation and requires a separate license for commercial use. The MIT license of this repository does not relicense those model weights. Do not treat this model path as cleared for commercial deployment or a cash-prize submission. No model weights are bundled. A compatible model with suitable rights must be separately verified before advancing the prize-oriented build.
 
 ```sh
 python3 pact.py --message fixtures/message.txt --capture-fixture fixtures/capture.json --ticket T-001
