@@ -1,0 +1,31 @@
+{
+  "consumer_example_version": 1,
+  "decision": "withhold_scoped_count_for_review",
+  "count_for_scoped_export": null,
+  "observed_hit_entries_retained": 1,
+  "returned_hits_retained": [
+    100
+  ],
+  "requested_range": [
+    0,
+    12288
+  ],
+  "declared_mapped_ranges": [
+    [
+      0,
+      4096
+    ],
+    [
+      8192,
+      12288
+    ]
+  ],
+  "reasons": [
+    "observation_not_reported_complete_within_its_narrow_scope",
+    "unobserved_mapped_ranges_nonempty_or_missing",
+    "read_failures_nonempty_or_missing"
+  ],
+  "claim_scope": "Returned hit entries in this run's declared mapped requested ranges only; not indicator absence, scanner correctness, acquisition or OS/plugin completeness",
+  "next_action": "Retain observations; review the input/run before treating the count as complete even in the declared scope.",
+  "trust_boundary": "Consumes a trusted local producer report; does not authenticate its claims or reopen the input."
+}

@@ -1,0 +1,50 @@
+{
+  "workflow": "Actual local ScanLedger CLI -> JSON -> consumer CLI",
+  "cases": [
+    {
+      "fixture": "intact",
+      "generated_not_acquired_OS_memory": true,
+      "input_sha256_unchanged": "8c4b1f50800653b17b9a7d5889032f4f3324553f3949ccf3182912463c40b680",
+      "scan_exit": 0,
+      "consumer_exit": 0,
+      "observation_status": "observed_mapped_ranges",
+      "decision": "export_scoped_observation_count",
+      "observed_hit_entries_retained": 2,
+      "count_for_scoped_export": 2,
+      "normal_unmapped_ranges": [
+        [
+          4096,
+          8192
+        ]
+      ]
+    },
+    {
+      "fixture": "truncated",
+      "generated_not_acquired_OS_memory": true,
+      "input_sha256_unchanged": "404e7cb6ba923dbbd3ba0b0d8157574dc692924afbc40d8cd036fd59a12efde5",
+      "scan_exit": 2,
+      "consumer_exit": 2,
+      "observation_status": "partial",
+      "decision": "withhold_scoped_count_for_review",
+      "observed_hit_entries_retained": 1,
+      "count_for_scoped_export": null,
+      "normal_unmapped_ranges": [
+        [
+          4096,
+          8192
+        ]
+      ]
+    }
+  ],
+  "meaning": "A partial positive hit list is retained for review rather than exported as a completed scoped count. Normal declared address gaps do not block the intact case.",
+  "not_established": [
+    "Indicator absence or scanner semantic correctness",
+    "Acquisition or OS/plugin forensic completeness",
+    "Practical superiority to correctly configured logging/manual review",
+    "Real practitioner adoption, novelty or award"
+  ],
+  "core_scan_algorithm_changed": false,
+  "new_LLM_or_paid_API_calls": 0,
+  "new_cash_spend": 0,
+  "performance_benchmark": false
+}

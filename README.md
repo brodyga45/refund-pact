@@ -30,6 +30,43 @@ Exit 2 is the expected diagnostic result for the truncated fixture. Raw local fi
 
 A local source checkout can be used by setting `PYTHONPATH` to that checkout. In the development workspace, `python3 test_scanledger.py` uses `upstream/`. For a separately installed dependency, remove that development checkout directory or place it at the tested commit. The test harness also works when the dependency is installed and no `upstream/` exists.
 
+## A downstream decision: whether to export a scoped count
+
+The v2 consumer example is a strict example policy for a developer consuming
+trusted local CLI JSON. It preserves partial positive observations but withholds
+their publication as a completed observation count even within the declared
+mapped window. It does not certify the source report or an indicator's absence.
+
+After installing the pinned dependency, run this one command into a new directory:
+
+```sh
+python3 consumer_demo.py --output consumer-run
+```
+
+This actually runs both generated LiME inputs through ScanLedger and then through
+`consumer_gate.py`. The demo returns success only when the expected decisions
+occur; its dependency cache stays inside that owned output directory.
+
+| Generated input | Returned hit entries retained | Count allowed for scoped export | Consumer decision |
+| --- | ---: | ---: | --- |
+| Intact | 2 | 2 | Export with the narrow scope and producer report |
+| Truncated | 1 | withheld | Retain the hit; review the input/run before publishing such a count |
+
+The confirmed outputs are in `results/consumer-v2-confirmed/`. A normal declared
+address gap is allowed in the intact case. Five additional decision checks cover
+this distinction, partial zero-hit input, contradictory error/stability fields,
+unsupported/bare reports and a window with no mapped observations:
+`python3 test_consumer_gate.py`. These are authored checks, not a human review.
+
+This demonstrates an automated consumer action on controlled fixtures, not
+practitioner adoption or superior forensic utility. Correctly configured logs,
+conservative manual review, or simple format/size validation are credible
+alternatives; format validation alone can identify this deliberately simple
+truncated fixture. The example has not established superiority to those options.
+Exporting explicitly labelled partial results may also be a valid policy; this
+example deliberately chooses a stricter one. It never equates a zero scoped count
+with clean memory, correct scanner semantics, or complete acquisition.
+
 ## What the report establishes
 
 - `mapped_ranges`: the ranges the layer declares mapped for the requested window.
@@ -57,4 +94,4 @@ Volatility already documents that scans may skip missing/unmappable chunks. [Iss
 
 Tested official source: [77ff0b1932d77527f850c8ced01d85805ea7bf97](https://github.com/volatilityfoundation/volatility3/tree/77ff0b1932d77527f850c8ced01d85805ea7bf97), reporting version 2.28.3. No upstream source changes are required. The wrapper/Additions and required notice are provided under [Volatility Software License 1.0](LICENSE.txt), not described as MIT.
 
-Code, fixtures and this report were prepared by Codex under the account owner's direction on 19 October 2026. No human code review or field deployment is claimed. Signed contest ICLA, entrant eligibility and the specific business-bank award recipient remain unconfirmed; publication is not a contest submission.
+The scan core and fixtures were prepared by Codex under the account owner's direction on 19 October 2026; the consumer example and accompanying report were updated on 21 October 2026. No human code review or field deployment is claimed. Signed contest ICLA, entrant eligibility and the specific business-bank award recipient remain unconfirmed; publication is not a contest submission.

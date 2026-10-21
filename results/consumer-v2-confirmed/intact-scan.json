@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "observation_status": "observed_mapped_ranges",
+  "claim_scope": "Declared mapped byte ranges delivered to completed scanner callbacks in this run only",
+  "requested_range": [
+    0,
+    12288
+  ],
+  "ranges_are_half_open": true,
+  "mapped_ranges": [
+    [
+      0,
+      4096
+    ],
+    [
+      8192,
+      12288
+    ]
+  ],
+  "unmapped_requested_ranges": [
+    [
+      4096,
+      8192
+    ]
+  ],
+  "unobserved_mapped_ranges": [],
+  "completed_scanner_ranges": [
+    [
+      0,
+      4096
+    ],
+    [
+      8192,
+      12288
+    ]
+  ],
+  "hits": [
+    100,
+    9000
+  ],
+  "read_failures": [],
+  "scanner_errors": [],
+  "padded_read_requests": [],
+  "top_level_exception": null,
+  "scanner_callbacks": [
+    {
+      "start": 0,
+      "end": 4096,
+      "completed": true
+    },
+    {
+      "start": 8192,
+      "end": 12288,
+      "completed": true
+    }
+  ],
+  "wall_seconds": 8.5e-05,
+  "limitations": [
+    "No guarantee about acquisition completeness or OS/plugin forensic completeness",
+    "No validation of scanner semantics; padded reads conservatively mark partial",
+    "Exclusive context ownership and sequential execution required",
+    "Read failure spans may exceed the truly unreadable bytes",
+    "Unmapped ranges may be normal physical address gaps; they are not labelled failed reads",
+    "Matching pre/post hashes do not prove absence of concurrent modifications; use a stable readonly input"
+  ],
+  "input_name": "intact.lime",
+  "input_sha256_before": "8c4b1f50800653b17b9a7d5889032f4f3324553f3949ccf3182912463c40b680",
+  "input_sha256_after": "8c4b1f50800653b17b9a7d5889032f4f3324553f3949ccf3182912463c40b680",
+  "input_stability_check_equal": true,
+  "needle_sha256": "65b41b711b0b72f1ae2b6c7ffef177c9b8ebe8591b3adf3c8b7debed4f78bff9",
+  "image_format": "lime"
+}

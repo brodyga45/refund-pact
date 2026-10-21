@@ -1,0 +1,28 @@
+{
+  "consumer_example_version": 1,
+  "decision": "export_scoped_observation_count",
+  "count_for_scoped_export": 2,
+  "observed_hit_entries_retained": 2,
+  "returned_hits_retained": [
+    100,
+    9000
+  ],
+  "requested_range": [
+    0,
+    12288
+  ],
+  "declared_mapped_ranges": [
+    [
+      0,
+      4096
+    ],
+    [
+      8192,
+      12288
+    ]
+  ],
+  "reasons": [],
+  "claim_scope": "Returned hit entries in this run's declared mapped requested ranges only; not indicator absence, scanner correctness, acquisition or OS/plugin completeness",
+  "next_action": "Export only with the scope label and source report.",
+  "trust_boundary": "Consumes a trusted local producer report; does not authenticate its claims or reopen the input."
+}
