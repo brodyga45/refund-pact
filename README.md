@@ -40,7 +40,7 @@ mapped window. It does not certify the source report or an indicator's absence.
 After installing the pinned dependency, run this one command into a new directory:
 
 ```sh
-python3 consumer_demo.py --output consumer-run
+.venv/bin/python consumer_demo.py --output consumer-run
 ```
 
 This actually runs both generated LiME inputs through ScanLedger and then through
@@ -56,7 +56,7 @@ The confirmed outputs are in `results/consumer-v2-confirmed/`. A normal declared
 address gap is allowed in the intact case. Five additional decision checks cover
 this distinction, partial zero-hit input, contradictory error/stability fields,
 unsupported/bare reports and a window with no mapped observations:
-`python3 test_consumer_gate.py`. These are authored checks, not a human review.
+`.venv/bin/python test_consumer_gate.py`. These are authored checks, not a human review.
 
 This demonstrates an automated consumer action on controlled fixtures, not
 practitioner adoption or superior forensic utility. Correctly configured logs,
